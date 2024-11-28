@@ -1,8 +1,10 @@
 package br.com.alura.forum.service
 
 import br.com.alura.forum.dto.TopicDto
+import br.com.alura.forum.dto.TopicView
 import br.com.alura.forum.enum.StatusTopic
 import br.com.alura.forum.model.Topic
+import br.com.alura.forum.utils.CreateTopicView
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,12 +14,14 @@ class TopicService(
     private var userService: UserService
 ) {
 
-    fun getTopics(): List<Topic> {
-        return topics
+    fun getTopics(): List<TopicView> {
+        return topics.map { CreateTopicView().create(it) }
     }
 
-    fun findById(id: Long): List<Topic> {
-        return topics.filter { it.id == id }
+    fun findById(id: Long): List<TopicView> {
+        return topics
+                .filter { it.id == id }
+                .map { CreateTopicView().create(it)}
     }
 
     fun create(dto: TopicDto) {

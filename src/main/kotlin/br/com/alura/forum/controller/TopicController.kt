@@ -1,7 +1,7 @@
 package br.com.alura.forum.controller
 
 import br.com.alura.forum.dto.TopicDto
-import br.com.alura.forum.model.Topic
+import br.com.alura.forum.dto.TopicView
 import br.com.alura.forum.service.TopicService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,12 +17,12 @@ class TopicController(
 ) {
 
     @GetMapping
-    fun getTopics(): List<Topic> {
+    fun getTopics(): List<TopicView> {
         return service.getTopics();
     }
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): List<Topic> {
+    fun getById(@PathVariable id: Long): List<TopicView> {
         return service.findById(id);
     }
 
