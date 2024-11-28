@@ -1,6 +1,6 @@
 package br.com.alura.forum.service
 
-import br.com.alura.forum.dto.TopicDto
+import br.com.alura.forum.dto.TopicForm
 import br.com.alura.forum.dto.TopicView
 import br.com.alura.forum.enum.StatusTopic
 import br.com.alura.forum.model.Topic
@@ -24,7 +24,7 @@ class TopicService(
                 .map { CreateTopicView().create(it)}
     }
 
-    fun create(dto: TopicDto) {
+    fun create(dto: TopicForm) {
         topics.add(
             Topic(
                 id = topics.size.toLong() + 1,

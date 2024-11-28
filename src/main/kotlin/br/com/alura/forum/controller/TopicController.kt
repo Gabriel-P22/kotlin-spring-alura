@@ -1,6 +1,6 @@
 package br.com.alura.forum.controller
 
-import br.com.alura.forum.dto.TopicDto
+import br.com.alura.forum.dto.TopicForm
 import br.com.alura.forum.dto.TopicView
 import br.com.alura.forum.service.TopicService
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,7 +27,7 @@ class TopicController(
     }
 
     @PostMapping()
-    fun createTopic(@RequestBody topic: TopicDto) {
+    fun createTopic(@RequestBody topic: TopicForm) {
         service.create(topic)
     }
 

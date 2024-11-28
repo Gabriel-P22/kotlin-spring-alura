@@ -1,6 +1,6 @@
 package br.com.alura.forum.dto
 
-data class TopicDto(
+data class TopicForm(
     val id: Long? = null,
     val title: String,
     val message: String,
