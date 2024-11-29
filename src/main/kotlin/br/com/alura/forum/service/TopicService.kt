@@ -42,4 +42,9 @@ class TopicService(
 
         topics.add(topic);
     }
+
+    fun delete(id: Long) {
+        val topic = topics.first { it.id == id };
+        topics = topics.minus(topic).toMutableList();
+    }
 }
