@@ -26,13 +26,15 @@ class TopicService(
                 .map { topicViewMapper.map(it)}
     }
 
-    fun create(dto: TopicForm) {
+    fun create(dto: TopicForm): TopicView {
         val topic =  topicFormMapper.map(dto);
         topic.id = topics.size.toLong() + 1
-        topics.add(topic)
+        topics.add(topic);
+
+        return topicViewMapper.map(topic);
     }
 
-    fun update(dto: UpdateTopicForm) {
+    fun update(dto: UpdateTopicForm): TopicView {
         val topic = topics.first { it.id == dto.id };
 
         topics = topics.minus(topic).toMutableList();
@@ -41,6 +43,7 @@ class TopicService(
         topic.message = dto.message;
 
         topics.add(topic);
+        return topicViewMapper.map(topic);
     }
 
     fun delete(id: Long) {
