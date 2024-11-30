@@ -8,10 +8,12 @@ spring:
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
-    format_sql: true
-    hibernate:
-      ddl-auto: update
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+
+
   h2:
     console:
       enabled: true
