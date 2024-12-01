@@ -5,6 +5,8 @@ import br.com.alura.forum.dto.TopicView
 import br.com.alura.forum.dto.UpdateTopicForm
 import br.com.alura.forum.service.TopicService
 import jakarta.validation.Valid
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -31,6 +33,7 @@ class TopicController(
 ) {
 
     @GetMapping
+    @Cacheable("topics")
     fun getTopics(
         @RequestParam(required = false) trainingName: String?,
         @PageableDefault(size = 5, sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable
@@ -45,6 +48,7 @@ class TopicController(
 
     @PostMapping()
     @Transactional
+    @CacheEvict(value = ["topics"], allEntries = true)
     fun createTopic(
         @RequestBody @Valid topic: TopicForm,
         uriBuilder: UriComponentsBuilder
@@ -61,6 +65,7 @@ class TopicController(
 
     @PutMapping()
     @Transactional
+    @CacheEvict(value = ["topics"], allEntries = true)
     fun updateTopic(@RequestBody @Valid topic: UpdateTopicForm): ResponseEntity<TopicView> {
         return ResponseEntity.ok(
             service.update(topic)
@@ -70,6 +75,7 @@ class TopicController(
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
+    @CacheEvict(value = ["topics"], allEntries = true)
     fun delete(@PathVariable id: Long) {
         service.delete(id)
     }
