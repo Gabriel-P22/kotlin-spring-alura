@@ -1,7 +1,11 @@
 package br.com.alura.forum.config.security
 
+import br.com.alura.forum.config.jwt.JwtConfiguration
+import br.com.alura.forum.security.JwtAuthenticationFilter
+import br.com.alura.forum.security.JwtLoginFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
@@ -13,16 +17,22 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.filter.OncePerRequestFilter
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration() {
+class SecurityConfiguration(
+    private val jwtConfiguration: JwtConfiguration,
+    private val authenticationConfiguration: AuthenticationConfiguration
+) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { auth ->
                 auth.requestMatchers("/h2-console/**").hasAnyAuthority("DB_READ_AND_WRITE")
+                auth.requestMatchers(HttpMethod.POST,"/login").permitAll()
                 auth.requestMatchers("/topics").hasAnyAuthority("READ_AND_WRITE")
                 auth.anyRequest().authenticated()
             }
@@ -33,8 +43,9 @@ class SecurityConfiguration() {
             .sessionManagement { session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
-            .formLogin { it.disable() }
-            .httpBasic { }
+            .addFilterBefore(JwtLoginFilter(authManager = authenticationManager(), jwtConfiguration = jwtConfiguration), UsernamePasswordAuthenticationFilter().javaClass)
+            .addFilterBefore(JwtAuthenticationFilter(jwtConfiguration = jwtConfiguration), UsernamePasswordAuthenticationFilter().javaClass)
+
         return http.build()
     }
 
@@ -47,8 +58,8 @@ class SecurityConfiguration() {
     }
 
     @Bean
-    fun authenticationManager(authConfig: AuthenticationConfiguration): AuthenticationManager {
-        return authConfig.authenticationManager
+    fun authenticationManager(): AuthenticationManager {
+        return authenticationConfiguration.authenticationManager
     }
 
     @Bean
