@@ -1,0 +1,11 @@
+CREATE TABLE USER_ROLE (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (user_id) REFERENCES USERS(id),
+    FOREIGN KEY (role_id) REFERENCES ROLE(id)
+);
+
+INSERT INTO USER_ROLE (id, user_id, role_id) VALUES (1, 1, 1);
+INSERT INTO USER_ROLE (id, user_id, role_id) VALUES (2, 1, 2);
