@@ -1,29 +1,36 @@
 package br.com.alura.forum.config.jwt
 
+import br.com.alura.forum.service.UserService
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class JwtConfiguration {
+class JwtConfiguration(
+    private val userService: UserService
+) {
 
     private val expiration: Long = 60000;
 
     @Value("\${jwt.secret}")
     private lateinit var secret: String;
 
-    fun generateToken(userName: String?): String? {
+    fun generateToken(userName: String?, authorities: MutableCollection<out GrantedAuthority>): String? {
         val key = Keys.hmacShaKeyFor(secret.toByteArray());
 
         val exp = Date(System.currentTimeMillis() + expiration);
 
+        val roles = authorities.map { it.authority }
+
         return Jwts.builder()
             .setSubject(userName)
+            .claim("role", roles)
             .setExpiration(exp)
             .setIssuedAt(Date())
             .signWith(key, SignatureAlgorithm.HS512)
@@ -50,6 +57,8 @@ class JwtConfiguration {
             .body
             .subject;
 
-        return UsernamePasswordAuthenticationToken(userName, null, null)
+        val user = userService.loadUserByUsername(userName)
+
+        return UsernamePasswordAuthenticationToken(userName, null, user.authorities)
     }
 }
