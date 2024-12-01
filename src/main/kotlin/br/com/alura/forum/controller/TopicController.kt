@@ -1,6 +1,7 @@
 package br.com.alura.forum.controller
 
 import br.com.alura.forum.dto.TopicForm
+import br.com.alura.forum.dto.TopicPerCategory
 import br.com.alura.forum.dto.TopicView
 import br.com.alura.forum.dto.UpdateTopicForm
 import br.com.alura.forum.service.TopicService
@@ -78,6 +79,11 @@ class TopicController(
     @CacheEvict(value = ["topics"], allEntries = true)
     fun delete(@PathVariable id: Long) {
         service.delete(id)
+    }
+
+    @GetMapping("/report")
+    fun getReport(): List<TopicPerCategory> {
+       return service.getReport();
     }
 
 }
