@@ -12,6 +12,7 @@ import br.com.alura.forum.repository.TopicRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class TopicService(
@@ -48,6 +49,7 @@ class TopicService(
         val topic = findTopicById(dto.id);
         topic.title = dto.title;
         topic.message = dto.message;
+        topic.updatedAt = LocalDateTime.now();
         repository.save(topic);
         return topicViewMapper.map(topic);
     }

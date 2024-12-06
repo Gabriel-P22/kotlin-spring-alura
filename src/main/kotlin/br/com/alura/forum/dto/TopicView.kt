@@ -8,7 +8,8 @@ data class TopicView(
     val title: String,
     val message: String,
     val status: StatusTopic,
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime?
     ) {
 
 }

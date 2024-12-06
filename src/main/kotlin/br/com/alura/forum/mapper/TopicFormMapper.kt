@@ -6,6 +6,7 @@ import br.com.alura.forum.model.Topic
 import br.com.alura.forum.service.TrainingService
 import br.com.alura.forum.service.UserService
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class TopicFormMapper(

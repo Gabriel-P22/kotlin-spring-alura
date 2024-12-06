@@ -12,10 +12,12 @@ spring:
     password: root
     locations: classpath:db/migration
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     properties:
       hibernate:
-        show-sql: true
-        format_sql: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      show-sql: true
+      format_sql: true
 jwt:
   secret: 7WsdqZT0GH5ld8eQfbQMbB9+8oInzj1Vgyy3w7S7xy5Z8+EJg1w59mEni6qICtiD

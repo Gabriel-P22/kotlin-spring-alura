@@ -1,1 +1,1 @@
-ALTER TABLE USERS ADD COLUMN password text;
+ALTER TABLE users ADD COLUMN password text;
