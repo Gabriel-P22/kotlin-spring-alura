@@ -12,10 +12,5 @@ spring:
       hibernate:
         show-sql: true
         format_sql: true
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
 jwt:
   secret: 7WsdqZT0GH5ld8eQfbQMbB9+8oInzj1Vgyy3w7S7xy5Z8+EJg1w59mEni6qICtiD
