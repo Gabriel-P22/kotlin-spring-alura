@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.web.filter.OncePerRequestFilter
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +34,8 @@ class SecurityConfiguration(
                 auth.requestMatchers(HttpMethod.POST,"/login").permitAll()
                 auth.requestMatchers("/topics").hasAnyAuthority("READ_AND_WRITE")
                 auth.requestMatchers("/answer").hasAnyAuthority("READ_AND_WRITE")
+                auth.requestMatchers("/reports").hasAnyAuthority("ADMIN")
+
                 auth.anyRequest().authenticated()
             }
             .csrf { it.disable() }

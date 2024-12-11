@@ -6,3 +6,4 @@ CREATE TABLE role (
 
 INSERT INTO role (id, name) VALUES (1, 'READ_AND_WRITE');
 INSERT INTO role (id, name) VALUES (2, 'DB_READ_AND_WRITE');
+INSERT INTO role (id, name) VALUES (3, 'ADMIN');

@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>admin report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Topic per category </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th> Category </th>
+                    <th> Quantity </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${topicsPerCategory.empty}">
+                    <td colspan="2"> Sem dados </td>
+                </tr>
+                <tr th:each="topicPerCategory : ${topicsPerCategory}">
+                    <td th:text="${topicPerCategory.category}"></td>
+                    <td th:text="${topicPerCategory.size}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
