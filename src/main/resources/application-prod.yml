@@ -2,20 +2,36 @@ spring:
   application:
     name: forum
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:forum
-    username: sa
-    password:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  flyway:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    locations: classpath:db/migration
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     properties:
       hibernate:
-        show-sql: true
-        format_sql: true
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      show-sql: true
+      format_sql: true
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: userID-THIS-IS-A-MOCK-PASS-A-REAL
+    password: password-THIS-IS-A-MOCK-PASS-A-REAL
+    properties:
+      mail:
+        transport:
+          protocol:smtp
+        debug: true
+      smtp:
+        auth: true
+        starttls:
+          enable: true
 jwt:
   secret: 7WsdqZT0GH5ld8eQfbQMbB9+8oInzj1Vgyy3w7S7xy5Z8+EJg1w59mEni6qICtiD
