@@ -34,6 +34,7 @@ class SecurityConfiguration(
                 auth.requestMatchers("/h2-console/**").hasAnyAuthority("DB_READ_AND_WRITE")
                 auth.requestMatchers(HttpMethod.POST,"/login").permitAll()
                 auth.requestMatchers("/topics").hasAnyAuthority("READ_AND_WRITE")
+                auth.requestMatchers("/answer").hasAnyAuthority("READ_AND_WRITE")
                 auth.anyRequest().authenticated()
             }
             .csrf { it.disable() }

@@ -19,5 +19,19 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       show-sql: true
       format_sql: true
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: userID-THIS-IS-A-MOCK-PASS-A-REAL
+    password: password-THIS-IS-A-MOCK-PASS-A-REAL
+    properties:
+      mail:
+        transport:
+          protocol:smtp
+        debug: true
+      smtp:
+        auth: true
+        starttls:
+          enable: true
 jwt:
   secret: 7WsdqZT0GH5ld8eQfbQMbB9+8oInzj1Vgyy3w7S7xy5Z8+EJg1w59mEni6qICtiD
