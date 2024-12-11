@@ -37,16 +37,16 @@ class AnswerController(
     @PostMapping()
     @Transactional
     fun createAnswer(
-        @RequestBody @Valid topic: Answer,
+        @RequestBody @Valid answer: Answer,
         uriBuilder: UriComponentsBuilder
     ): ResponseEntity<Answer> {
-        val topicView = service.create(topic)
+        val topicView = service.create(answer)
 
         val uri = uriBuilder
-            .path("/topic/${topicView.id}")
+            .path("/topic/${answer.id}")
             .build()
             .toUri();
 
-        return ResponseEntity.created(uri).body(topicView)
+        return ResponseEntity.created(uri).body(answer)
     }
 }
